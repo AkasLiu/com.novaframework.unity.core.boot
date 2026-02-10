@@ -1,6 +1,6 @@
 /// -------------------------------------------------------------------------------
-/// Copyright (C) 2024 - 2025, Hurley, Independent Studio.
-/// Copyright (C) 2025 - 2026, Hainan Yuanyou Information Technology Co., Ltd. Guangzhou Branch
+/// Copyright (C) 2023, Guangzhou Shiyue Network Technology Co., Ltd.
+/// Copyright (C) 2025, Hainan Yuanyou Information Technology Co., Ltd. Guangzhou Branch
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,54 @@
 /// THE SOFTWARE.
 /// -------------------------------------------------------------------------------
 
+
+using System;
+using UnityEditor;
 using UnityEngine;
 
-namespace NovaFramework.Editor
+namespace NovaFramework.Editor.Preference
 {
+   
     /// <summary>
-    /// 设置文件导出工具类
+    /// 安装完成后自动导出配置的处理器
     /// </summary>
-    static class SettingsExport
+    public class SettingsExportStep : InstallationStep
     {
         const string AppSettingsAssetUrl = @"Assets/Resources/AppSettings.asset";
         const string AppConfigureAssetUrl = @"Assets/Resources/AppConfigures.asset";
-
+        public override void Install(System.Action onComplete = null)
+        {
+            Debug.Log("PostInstallConfigurationExporter: 开始执行安装后配置资产创建");
+            
+            CreateAndSaveSettingAsset();
+            Debug.Log("已创建 AppSettings.asset");
+            
+            CreateAndSaveConfigureAsset();
+            Debug.Log("已创建 AppConfigures.asset");
+            
+            Debug.Log("CreateConfigurationStep: 配置资产创建完成");
+            
+            // 调用完成回调
+            onComplete?.Invoke();
+        }
+        
+        /// <summary>
+        /// 创建并保存‘AppConfigures’资产文件
+        /// </summary>
+        internal AppConfigures CreateAndSaveConfigureAsset()
+        {
+            return AssetDatabaseUtils.CreateScriptableObjectAsset<AppConfigures>(AppConfigureAssetUrl, (asset) =>
+            {
+                asset.GameEntryName = @"Game.GameWorld";
+                asset.NetworkMessageHeaderSize = NetworkMessageHeaderSizeType.Header4;
+                asset.LogChannel = new LogChannelType[] { LogChannelType.Console, LogChannelType.Editor };
+            });
+        }
+        
         /// <summary>
         /// 创建并保存‘AppSettings’资产文件
         /// </summary>
-        public static AppSettings CreateAndSaveSettingAsset()
+        internal AppSettings CreateAndSaveSettingAsset()
         {
             return AssetDatabaseUtils.CreateScriptableObjectAsset<AppSettings>(AppSettingsAssetUrl, (asset) =>
             {
@@ -53,17 +85,14 @@ namespace NovaFramework.Editor
             });
         }
 
-        /// <summary>
-        /// 创建并保存‘AppConfigures’资产文件
-        /// </summary>
-        public static AppConfigures CreateAndSaveConfigureAsset()
+        public override void Uninstall(System.Action onComplete = null)
         {
-            return AssetDatabaseUtils.CreateScriptableObjectAsset<AppConfigures>(AppConfigureAssetUrl, (asset) =>
-            {
-                asset.GameEntryName = @"Game.GameWorld";
-
-                asset.LogChannel = new LogChannelType[] { LogChannelType.Console, LogChannelType.Editor };
-            });
+            Debug.Log("PostInstallConfigurationExporter: 执行卸载操作");
+            // 卸载逻辑（如果需要）
+            AssetDatabase.DeleteAsset(AppSettingsAssetUrl);
+            AssetDatabase.DeleteAsset(AppConfigureAssetUrl);
+            // 调用完成回调
+            onComplete?.Invoke();
         }
     }
 }
