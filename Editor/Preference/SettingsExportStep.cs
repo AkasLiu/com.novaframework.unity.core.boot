@@ -21,14 +21,12 @@
 /// THE SOFTWARE.
 /// -------------------------------------------------------------------------------
 
-
 using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace NovaFramework.Editor.Preference
 {
-   
     /// <summary>
     /// 安装完成后自动导出配置的处理器
     /// </summary>
@@ -36,22 +34,23 @@ namespace NovaFramework.Editor.Preference
     {
         const string AppSettingsAssetUrl = @"Assets/Resources/AppSettings.asset";
         const string AppConfigureAssetUrl = @"Assets/Resources/AppConfigures.asset";
+
         public override void Install(System.Action onComplete = null)
         {
             Debug.Log("PostInstallConfigurationExporter: 开始执行安装后配置资产创建");
-            
+
             CreateAndSaveSettingAsset();
             Debug.Log("已创建 AppSettings.asset");
-            
+
             CreateAndSaveConfigureAsset();
             Debug.Log("已创建 AppConfigures.asset");
-            
+
             Debug.Log("CreateConfigurationStep: 配置资产创建完成");
-            
+
             // 调用完成回调
             onComplete?.Invoke();
         }
-        
+
         /// <summary>
         /// 创建并保存‘AppConfigures’资产文件
         /// </summary>
@@ -60,11 +59,11 @@ namespace NovaFramework.Editor.Preference
             return AssetDatabaseUtils.CreateScriptableObjectAsset<AppConfigures>(AppConfigureAssetUrl, (asset) =>
             {
                 asset.GameEntryName = @"Game.GameWorld";
-                asset.NetworkMessageHeaderSize = NetworkMessageHeaderSizeType.Header4;
+                asset.NetworkMessageHeaderSize = NetworkMessageHeaderSizeType.Header2;
                 asset.LogChannel = new LogChannelType[] { LogChannelType.Console, LogChannelType.Editor };
             });
         }
-        
+
         /// <summary>
         /// 创建并保存‘AppSettings’资产文件
         /// </summary>
@@ -88,9 +87,11 @@ namespace NovaFramework.Editor.Preference
         public override void Uninstall(System.Action onComplete = null)
         {
             Debug.Log("PostInstallConfigurationExporter: 执行卸载操作");
+
             // 卸载逻辑（如果需要）
             AssetDatabase.DeleteAsset(AppSettingsAssetUrl);
             AssetDatabase.DeleteAsset(AppConfigureAssetUrl);
+
             // 调用完成回调
             onComplete?.Invoke();
         }
