@@ -34,7 +34,7 @@ namespace NovaFramework
     /// <summary>
     /// 应用程序的基础配置，用于应用正式启动的参数设置
     /// </summary>
-    // [CreateAssetMenu(fileName = "AppSettings", menuName = "Nova Framework/Application Settings")] // 创建后可以不再显示在右键菜单
+    // [CreateAssetMenu(fileName = nameof(AppSettings), menuName = "Nova Framework/Application Settings")] // 创建后可以不再显示在右键菜单
     public class AppSettings : ScriptableObject
     {
         // ----------------------------------------------------------------------------------------------------

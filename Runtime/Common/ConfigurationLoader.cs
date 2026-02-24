@@ -21,6 +21,7 @@
 /// THE SOFTWARE.
 /// -------------------------------------------------------------------------------
 
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -31,7 +32,7 @@ namespace NovaFramework
     /// <summary>
     /// 程序配置加载器类，用于对程启动所需的相关配置参数进行统一加载管理
     /// </summary>
-    internal static class ConfigurationLoader
+    static class ConfigurationLoader
     {
         /// <summary>
         /// 加载应用配置的设置信息
@@ -39,7 +40,7 @@ namespace NovaFramework
         // public static async UniTask<IReadOnlyDictionary<string, string>> LoadEnvironmentSettings()
         public static IReadOnlyDictionary<string, string> LoadEnvironmentSettings()
         {
-            IDictionary<string, string> vars = new Dictionary<string, string>();
+            Dictionary<string, string> vars = new Dictionary<string, string>();
 
             // 系统配置数据
             AppSettings settings = AppSettings.Instance;
@@ -118,15 +119,10 @@ namespace NovaFramework
 #else
             vars.Add(nameof(configures.TutorialMode), "false");
 #endif
-            if ((int) configures.TutorialSampleType > 0)
-            {
-                // 合法配置教程案例
-                vars.Add(nameof(configures.TutorialSampleType), configures.TutorialSampleType.ToString());
-            }
 
             // await LoadConfigureSettingsVariables(vars);
 
-            return new System.Collections.ObjectModel.ReadOnlyDictionary<string, string>(vars);
+            return vars;
         }
 
         #region 属性文件加载、解析处理接口函数

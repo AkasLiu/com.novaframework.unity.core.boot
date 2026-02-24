@@ -27,7 +27,7 @@ namespace NovaFramework
     /// <summary>
     /// 辅助工具接口类，用于提供一些辅助工具方法
     /// </summary>
-    internal static class Utils
+    static class Utils
     {
         /// <summary>
         /// 检测当前运行环境下是否只有一个场景，且该场景中没有任何游戏对象实例

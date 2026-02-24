@@ -31,7 +31,7 @@ namespace NovaFramework
     /// <summary>
     /// 应用程序的基础配置，用于应用正式启动的参数设置
     /// </summary>
-    // [CreateAssetMenu(fileName = "AppConfigures", menuName = "Nova Framework/Application Configures")] // 创建后可以不再显示在右键菜单
+    // [CreateAssetMenu(fileName = nameof(AppConfigures), menuName = "Nova Framework/Application Configures")] // 创建后可以不再显示在右键菜单
     public class AppConfigures : ScriptableObject
     {
         // ----------------------------------------------------------------------------------------------------
@@ -84,10 +84,6 @@ namespace NovaFramework
         [FieldLabelName("教程模式")]
         [Tooltip("当此模式打开后，程序将跳转到演示案例环境下进行启动")]
         public bool TutorialMode = false;
-
-        [FieldLabelName("教程案例")]
-        [Tooltip("通过选择教程示例，程序运行后将在对应的案例环境下进行启动")]
-        public TutorialSampleType TutorialSampleType = TutorialSampleType.Unknown;
 
         /// <summary>
         /// AppConfigures实例
@@ -152,44 +148,5 @@ namespace NovaFramework
 
         [Header("本地文件")]
         File = 8,
-    }
-
-    /// <summary>
-    /// 教程示例的类型定义
-    /// </summary>
-    public enum TutorialSampleType : int
-    {
-        [Header("未知")]
-        Unknown = 0,
-
-        [Header("文本格式化")]
-        TextFormat,
-
-        [Header("符号解析")]
-        SymbolParser,
-
-        [Header("构建动态调用")]
-        DynamicInvokeGenerator,
-
-        [Header("控制反转")]
-        InversionOfControl,
-
-        [Header("对象生命周期")]
-        ObjectLifecycle,
-
-        [Header("转发通知")]
-        DispatchCall,
-
-        [Header("状态转换")]
-        StateTransition,
-
-        [Header("依赖注入")]
-        DependencyInject,
-
-        [Header("配置表达式")]
-        ConfigureExpression,
-
-        [Header("性能分析")]
-        PerformanceAnalysis,
     }
 }

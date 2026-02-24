@@ -35,7 +35,7 @@ namespace NovaFramework.Editor.Preference
         const string AppSettingsAssetUrl = @"Assets/Resources/AppSettings.asset";
         const string AppConfigureAssetUrl = @"Assets/Resources/AppConfigures.asset";
 
-        public override void Install(System.Action onComplete = null)
+        public void Install(Action onComplete = null)
         {
             Debug.Log("PostInstallConfigurationExporter: 开始执行安装后配置资产创建");
 
@@ -52,22 +52,9 @@ namespace NovaFramework.Editor.Preference
         }
 
         /// <summary>
-        /// 创建并保存‘AppConfigures’资产文件
-        /// </summary>
-        internal AppConfigures CreateAndSaveConfigureAsset()
-        {
-            return AssetDatabaseUtils.CreateScriptableObjectAsset<AppConfigures>(AppConfigureAssetUrl, (asset) =>
-            {
-                asset.GameEntryName = @"Game.GameWorld";
-                asset.NetworkMessageHeaderSize = NetworkMessageHeaderSizeType.Header2;
-                asset.LogChannel = new LogChannelType[] { LogChannelType.Console, LogChannelType.Editor };
-            });
-        }
-
-        /// <summary>
         /// 创建并保存‘AppSettings’资产文件
         /// </summary>
-        internal AppSettings CreateAndSaveSettingAsset()
+        private AppSettings CreateAndSaveSettingAsset()
         {
             return AssetDatabaseUtils.CreateScriptableObjectAsset<AppSettings>(AppSettingsAssetUrl, (asset) =>
             {
@@ -84,7 +71,20 @@ namespace NovaFramework.Editor.Preference
             });
         }
 
-        public override void Uninstall(System.Action onComplete = null)
+        /// <summary>
+        /// 创建并保存‘AppConfigures’资产文件
+        /// </summary>
+        private AppConfigures CreateAndSaveConfigureAsset()
+        {
+            return AssetDatabaseUtils.CreateScriptableObjectAsset<AppConfigures>(AppConfigureAssetUrl, (asset) =>
+            {
+                asset.GameEntryName = @"Game.GameWorld";
+                asset.NetworkMessageHeaderSize = NetworkMessageHeaderSizeType.Header2;
+                asset.LogChannel = new LogChannelType[] { LogChannelType.Console, LogChannelType.Editor };
+            });
+        }
+
+        public void Uninstall(Action onComplete = null)
         {
             Debug.Log("PostInstallConfigurationExporter: 执行卸载操作");
 

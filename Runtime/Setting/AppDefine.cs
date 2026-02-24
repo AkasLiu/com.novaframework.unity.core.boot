@@ -26,7 +26,7 @@ namespace NovaFramework
     /// <summary>
     /// 应用程序常量设置类，用于统一管理当前模块中所需要用到的常量定义
     /// </summary>
-    internal static class AppDefine
+    static class AppDefine
     {
         /// <summary>
         /// 主调度器的场景名称
