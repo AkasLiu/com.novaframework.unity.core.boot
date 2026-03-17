@@ -35,17 +35,17 @@ namespace NovaFramework.Editor.Preference
         const string AppSettingsAssetUrl = @"Assets/Resources/AppSettings.asset";
         const string AppConfigureAssetUrl = @"Assets/Resources/AppConfigures.asset";
 
-        public void Install(Action onMessage, Action onComplete, Action onError, Action<string> addLog)
+        public void Install(Action onComplete, Action onError)
         {
-            addLog?.Invoke("开始执行安装后配置资产创建");
+            Logger.Info("开始执行安装后配置资产创建");
 
             CreateAndSaveSettingAsset();
-            addLog?.Invoke("已创建 AppSettings.asset");
+            Logger.Info("已创建 AppSettings.asset");
 
             CreateAndSaveConfigureAsset();
-            addLog?.Invoke("已创建 AppConfigures.asset");
+            Logger.Info("已创建 AppConfigures.asset");
 
-            addLog?.Invoke("配置资产创建完成");
+            Logger.Info("配置资产创建完成");
 
             // 调用完成回调
             onComplete?.Invoke();
@@ -84,9 +84,9 @@ namespace NovaFramework.Editor.Preference
             });
         }
 
-        public void Uninstall(Action onMessage, Action onComplete, Action onError)
+        public void Uninstall(Action onComplete, Action onError)
         {
-            Debug.Log("PostInstallConfigurationExporter: 执行卸载操作");
+            Logger.Info("执行卸载操作");
 
             // 卸载逻辑（如果需要）
             AssetDatabase.DeleteAsset(AppSettingsAssetUrl);
