@@ -30,7 +30,7 @@ namespace NovaFramework.Editor.Preference
     /// <summary>
     /// 安装完成后自动导出配置的处理器
     /// </summary>
-    public class SettingsExportStep : InstallationStep
+    public class NovaBootInstallationStep : InstallationStep
     {
         const string AppSettingsAssetUrl = @"Assets/Resources/AppSettings.asset";
         const string AppConfigureAssetUrl = @"Assets/Resources/AppConfigures.asset";
